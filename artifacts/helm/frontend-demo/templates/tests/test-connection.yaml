@@ -1,0 +1,21 @@
+---
+# Source: frontend-demo/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "frontend-demo-test-connection"
+  labels:
+    helm.sh/chart: frontend-demo-0.1.0
+    app.kubernetes.io/name: frontend-demo
+    app.kubernetes.io/instance: frontend-demo
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['frontend-demo:80']
+  restartPolicy: Never

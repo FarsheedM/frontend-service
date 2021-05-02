@@ -6,5 +6,5 @@ helm upgrade \
 	--force \
 	--wait \
 	--set-string image.repository="frontend-demo" \
-	--set-string bachend_demo_url="http://bachend-demo.default.svc.cluster.local:8080/greeting" \
+	--set-string backend_demo_url="http://backend-demo.default.svc.cluster.local:8080/greeting" \
 frontend-demo ./helm/frontend-demo

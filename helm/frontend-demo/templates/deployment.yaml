@@ -38,18 +38,18 @@ spec:
               value: "{{ .Values.backend_demo_url }}"
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             exec:
               command:
                 - curl
-                - localhost:80/actuator/health
+                - localhost:8080/actuator/health/liveness |grep -i up
           readinessProbe:
             exec:
               command:
                 - curl
-                - localhost:80/actuator/health
+                - localhost:8080/actuator/health/readiness |grep -i up
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
