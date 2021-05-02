@@ -1,0 +1,16 @@
+@startuml
+autonumber
+skinparam BoxPadding 10
+
+box "frontend-demo Service" #Lightblue
+HelloWorldDecoratorController -> HelloWorldDecoratorService: decorateGreeting
+end box
+
+box "backend-demo Service"
+HelloWorldDecoratorService -> HelloWorldController: <<WebClient request>>\n decorateGreeting
+note right: localhost:8080/greeting
+end box
+HelloWorldController -> HelloWorldDecoratorService: <<response>>\n greeting text
+HelloWorldDecoratorService -> HelloWorldDecoratorController: decorated text
+
+@enduml
