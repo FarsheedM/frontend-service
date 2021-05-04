@@ -1,0 +1,47 @@
+@startuml kubernetes
+
+footer 1-node cluster
+' scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesHpa.puml
+!includeurl KubernetesPuml/OSS/KubernetesApi.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+!includeurl KubernetesPuml/OSS/KubernetesRs.puml
+!includeurl KubernetesPuml/OSS/KubernetesNode.puml
+
+actor "User" as userAlias
+left to right direction
+
+' Kubernetes Components
+
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+    Namespace_Boundary(ns, "default") {
+        KubernetesSvc(svc, "", "")
+        KubernetesPod(backend, "backend-demo", "")
+        KubernetesPod(frontend, "frontend-demo", "")
+    }
+    note right:
+'    KubernetesNode(node,"","")
+}
+
+Rel(userAlias,svc,"get HTTP/1.1 localhost:8080", "1")
+Rel(svc,frontend,"load Balances to frontend pod", "2")
+Rel(frontend,backend,"get HTTP/1.1 localhost:8080/greeting", "3")
+Rel(backend,frontend,"hallo Welt", "4")
+Rel(frontend,svc,"hallo Welt, decorated by frontend-demo app", "5")
+Rel(svc, userAlias, "return content to", "6")
+@enduml
