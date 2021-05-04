@@ -34,10 +34,10 @@ class HelloWorldDecoratorControllerControllerTest {
     void controller_response_successfully() throws URISyntaxException {
         String expectedServiceValue = "hallo Welt"+ Constants.DECORATED_TEXT;
         when(helloWorldDecoratorService.decorateGreeting()).thenReturn(expectedServiceValue);
-        ResponseEntity<String> expectedResponse= helloWorldDecoratorController.decorateGreeting();
-        HttpStatus expectedStatusCode = expectedResponse.getStatusCode();
-        String actualBody = expectedResponse.getBody();
-        assertThat(expectedStatusCode,is(HttpStatus.OK));
+        ResponseEntity<String> response= helloWorldDecoratorController.decorateGreeting();
+        HttpStatus actualStatusCode = response.getStatusCode();
+        String actualBody = response.getBody();
+        assertThat(actualStatusCode,is(HttpStatus.OK));
         assertThat(actualBody,is(expectedServiceValue));
     }
 }
